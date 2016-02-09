@@ -200,6 +200,47 @@ public class Rover_Test {
         rover.command('F');
         Assert.assertTrue(rover.getX() == 0 );
     }
+    // String of Commands Tests
+
+    @Test
+    public void checkMultipleRotations(){
+        rover = new Rover('E', 99, 0, 100, 100);
+        rover.commandList("LL");
+        Assert.assertTrue(rover.getFacingDirection() == 'W');
+    }
+
+    @Test
+    public void checkMultipleForwards(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.commandList("FF");
+        Assert.assertTrue(rover.getFacingDirection() == 'N');
+        Assert.assertTrue(rover.getY() == 2);
+    }
+
+    @Test
+    public void checkMoveRotationMove(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.commandList("FRF");
+        Assert.assertTrue(rover.getFacingDirection() == 'W');
+        Assert.assertTrue(rover.getY() == 1);
+        Assert.assertTrue(rover.getX() == 1);
+    }
+    @Test
+    public void checkMultipleForwardsMultipleBackwards(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.commandList("FFBB");
+        Assert.assertTrue(rover.getFacingDirection() == 'N');
+        Assert.assertTrue(rover.getY() == 0);
+        Assert.assertTrue(rover.getX() == 0);
+    }
+    @Test
+    public void checkMultipleForwardsMultipleRotationsMultipleBackwards(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.commandList("FFLLBB");
+        Assert.assertTrue(rover.getFacingDirection() == 'S');
+        Assert.assertTrue(rover.getY() == 4);
+        Assert.assertTrue(rover.getX() == 0);
+    }
 
 
 }

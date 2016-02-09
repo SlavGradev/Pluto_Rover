@@ -45,6 +45,12 @@ public class Rover {
             rotate(commandType);
         }
     }
+
+    public void commandList(String commands){
+        for(int i = 0; i < commands.length(); i++){
+            command(commands.charAt(i));
+        }
+    }
     // Handles Moving
     private void move(char direction){
         if(direction == 'F'){
