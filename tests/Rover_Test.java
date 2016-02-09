@@ -171,6 +171,35 @@ public class Rover_Test {
         rover.command('R');
         Assert.assertTrue(rover.getFacingDirection() == 'E');
     }
+    // Grid Tests
+    @Test
+    public void checkIfRotateRobotWrapsAroundEast(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.command('L');
+        rover.command('F');
+        Assert.assertTrue(rover.getX() == 99 );
+    }
+
+    @Test
+    public void checkIfRotateRobotWrapsAroundSouth(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.command('B');
+        Assert.assertTrue(rover.getY() == 99 );
+    }
+
+    @Test
+    public void checkIfRotateRobotWrapsAroundNorth(){
+        rover = new Rover('N', 0, 99, 100, 100);
+        rover.command('F');
+        Assert.assertTrue(rover.getY() == 0 );
+    }
+
+    @Test
+    public void checkIfRotateRobotWrapsAroundWest(){
+        rover = new Rover('W', 99, 0, 100, 100);
+        rover.command('F');
+        Assert.assertTrue(rover.getX() == 0 );
+    }
 
 
 }

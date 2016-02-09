@@ -5,11 +5,25 @@ public class Rover {
     private char facingDirection;
     private int x;
     private int y;
+    private int maxX;
+    private int maxY;
 
+    // Initializes default grid of 100 100
     public Rover(char facingDirection, int x, int y) {
         this.facingDirection = facingDirection;
         this.x = x;
         this.y = y;
+        this.maxY = 100;
+        this.maxX = 100;
+    }
+
+    // User supplies grid coordinates
+    public Rover(char facingDirection, int x, int y,int maxX, int maxY) {
+        this.facingDirection = facingDirection;
+        this.x = x;
+        this.y = y;
+        this.maxX = maxX;
+        this.maxY = maxY;
     }
 
     public char getFacingDirection() {
@@ -31,7 +45,7 @@ public class Rover {
             rotate(commandType);
         }
     }
-
+    // Handles Moving
     private void move(char direction){
         if(direction == 'F'){
             switch(facingDirection) {
@@ -48,8 +62,18 @@ public class Rover {
                 case 'S': {y += 1;break;}
             }
         }
+        // Correct coordinates
+        if(x == -1){
+            x = maxX - 1;
+        }else if (x == maxX) {
+            x = 0;
+        }else if (y == maxY) {
+            y = 0;
+        }else if (y == -1 ){
+            y = maxY - 1;
+        }
     }
-
+    // Handles Rotation
     private void rotate(char direction) {
         if(direction == 'L'){
             switch(facingDirection) {
