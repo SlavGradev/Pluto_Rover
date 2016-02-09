@@ -5,16 +5,22 @@ public class Rover {
     private char facingDirection;
     private int x;
     private int y;
+    private int oldX;
+    private int oldY;
     private int maxX;
     private int maxY;
+    private boolean[][] obstacleMap;
 
     // Initializes default grid of 100 100
     public Rover(char facingDirection, int x, int y) {
         this.facingDirection = facingDirection;
         this.x = x;
         this.y = y;
-        this.maxY = 100;
-        this.maxX = 100;
+        maxY = 100;
+        maxX = 100;
+        oldX = x;
+        oldY = y;
+        obstacleMap = new boolean[100][100];
     }
 
     // User supplies grid coordinates
@@ -24,6 +30,9 @@ public class Rover {
         this.y = y;
         this.maxX = maxX;
         this.maxY = maxY;
+        oldX = x;
+        oldY = y;
+        obstacleMap = new boolean[maxX][maxY];
     }
 
     public char getFacingDirection() {
@@ -51,8 +60,14 @@ public class Rover {
             command(commands.charAt(i));
         }
     }
+
+    public void setObstacle(int x, int y){
+        obstacleMap[x][y] = true;
+    }
     // Handles Moving
     private void move(char direction){
+        oldX = x;
+        oldY = y;
         if(direction == 'F'){
             switch(facingDirection) {
                 case 'E': {x -= 1;break;}
@@ -78,6 +93,14 @@ public class Rover {
         }else if (y == -1 ){
             y = maxY - 1;
         }
+        // Check if we are on a obstacle
+        // If this is the case return to old coordinates
+        // And throw an exception
+        if(obstacleMap[x][y]){
+            x = oldX;
+            y = oldY;
+            throw new ObstacleException();
+        }
     }
     // Handles Rotation
     private void rotate(char direction) {
@@ -96,5 +119,9 @@ public class Rover {
                 case 'S': {facingDirection = 'E';break;}
             }
         }
+    }
+
+    public class ObstacleException extends RuntimeException{
+
     }
 }

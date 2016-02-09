@@ -241,6 +241,40 @@ public class Rover_Test {
         Assert.assertTrue(rover.getY() == 4);
         Assert.assertTrue(rover.getX() == 0);
     }
+    // Obstacle Tests
+    @Test(expected= Rover.ObstacleException.class)
+    public void checkBumpIntoObstacleThrowsException(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.setObstacle(0, 1);
+        rover.commandList("F");
+    }
+
+    @Test
+    public void checkBumpIntoObstacleReturnsLastValidCoordinates(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.setObstacle(0, 1);
+        try{
+            rover.commandList("F");
+        }catch(Rover.ObstacleException e){
+            Assert.assertTrue(rover.getY() == 0);
+            Assert.assertTrue(rover.getX() == 0);
+        }
+    }
+
+    @Test
+    public void checkIfStopsAfterBumpingIntoFirstObstacle(){
+        rover = new Rover('N', 0, 0, 100, 100);
+        rover.setObstacle(0, 1);
+        rover.setObstacle(2, 0);
+        try{
+            rover.commandList("FRFF");
+        }catch(Rover.ObstacleException e){
+            Assert.assertTrue(rover.getY() == 0);
+            Assert.assertTrue(rover.getX() == 0);
+        }
+    }
+
+
 
 
 }
